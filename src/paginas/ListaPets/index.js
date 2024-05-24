@@ -1,4 +1,4 @@
-import { FlatList, ImageBackground, StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import Card from "./Card";
 import pets from "../../mocks/pets";
 import PaginaBase from "../PaginaBase";

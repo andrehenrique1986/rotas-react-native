@@ -1,10 +1,12 @@
-import { View, ScrollView, StyleSheet, Image, FlatList, Text } from "react-native";
+import React from "react";
+import { View, ScrollView, StyleSheet, Image, Text } from "react-native";
 import PaginaBase from "../PaginaBase";
 import { Link, useRoute } from "@react-navigation/native";
 import uuid from 'react-native-uuid';
-export default function Sobre({ navigation }) {
-    const route = useRoute();
-    const { nome, imagem, descricao, localidade } = route.params;
+
+export default function Sobre() {
+    const rotas = useRoute();
+    const { nome, imagem, descricao, localidade } = rotas.params;
 
     return (
         <View style={styles.container}>
@@ -14,32 +16,37 @@ export default function Sobre({ navigation }) {
                         <Image source={imagem} style={styles.imagem} />
                         <Text style={styles.text}>{nome}</Text>
 
-                        {
-                            descricao.informacoes.map((item) => <Text style={styles.textList} key={uuid.v4()}>{item}</Text>)
-                        }
+                        {descricao.informacoes.map((informacao) => 
+                            <Text style={styles.textList} key={uuid.v4()}>{informacao}</Text>
+                        )}
 
                         <View style={styles.containerContato}>
-                            <Text style={styles.local}>
-                                {localidade}</Text>
+                            <Text style={styles.local}>{localidade}</Text>
                             <View style={styles.informacoes}>
                                 <View style={styles.containerInteracoes}>
                                     <Image source={require('../../assets/chat.png')} />
-                                    <Link to={{
-                                        screen: 'Mensagem', params: {
-                                            nomePet: nome
-                                        },
-                                    }} style={styles.local}>
+                                    <Link 
+                                        to={{
+                                            screen: 'Mensagem',
+                                            params: {
+                                                nomePet: nome,
+                                            },
+                                        }} 
+                                        style={styles.local}>
                                         Falar com responsável
                                     </Link>
                                 </View>
 
                                 <View style={styles.containerInteracoes}>
                                     <Image source={require('../../assets/share.png')} />
-                                    <Link to={{
-                                        screen: 'Mensagem', params: {
-                                            nomePet: nome
-                                        },
-                                    }} style={styles.local}>
+                                    <Link 
+                                        to={{
+                                            screen: 'Mensagem',
+                                            params: {
+                                                nomePet: nome,
+                                            },
+                                        }} 
+                                        style={styles.local}>
                                         Compartilhar
                                     </Link>
                                 </View>
@@ -48,71 +55,63 @@ export default function Sobre({ navigation }) {
 
                         <Text style={styles.textResumo}>{descricao.resumo}</Text>
 
-                        {
-                            descricao.fotos.map((item) => <Image source={item} key={uuid.v4()} style={styles.image} />)
-                        }
+                        {descricao.fotos.map((foto) => 
+                            <Image source={foto} key={uuid.v4()} style={styles.image} />
+                        )}
                     </View>
-
-
                 </PaginaBase>
             </ScrollView>
-        </View >
-
+        </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFFFFF',
         flex: 1,
+        backgroundColor: '#fff',
     },
     contentContainer: {
-        paddingTop: 150,
-        marginHorizontal: 40,
-        zIndex: 1,
-    },
-    text: {
-        color: "#3772FF",
-        fontFamily: 'PoppinsRegular',
-        fontSize: 16,
-        fontWeight: 'bold',
+        padding: 20,
     },
     imagem: {
-        alignSelf: 'center',
+        width: '100%',
+        height: 200,
+        resizeMode: 'cover',
+    },
+    text: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginVertical: 10,
     },
     textList: {
-        color: '#737380',
-        fontSize: 14,
-        lineHeight: 20
-    },
-    containerInteracoes: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-    },
-    informacoes: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    local: {
-        color: '#737380',
-        fontSize: 12,
+        fontSize: 16,
+        marginVertical: 5,
     },
     containerContato: {
-        paddingVertical: 32
+        marginVertical: 20,
+    },
+    local: {
+        fontSize: 16,
+        color: '#007BFF',
+        marginVertical: 5,
+    },
+    informacoes: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    containerInteracoes: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     textResumo: {
-        color: '#737380',
-        fontSize: 14,
-        lineHeight: 20,
-        marginBottom: 24
+        fontSize: 18,
+        fontStyle: 'italic',
+        marginVertical: 10,
     },
     image: {
-        width: 300,
-        height: 300,
-        marginBottom: 24
-    }
+        width: '100%',
+        height: 200,
+        resizeMode: 'cover',
+        marginVertical: 10,
+    },
 });
